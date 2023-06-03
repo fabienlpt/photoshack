@@ -21,8 +21,12 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/images', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Images');
 })->middleware(['auth', 'verified'])->name('images');
+
+Route::get('/image/:url', function () {
+    return Inertia::render('Image');
+})->middleware(['auth', 'verified'])->name('image');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
