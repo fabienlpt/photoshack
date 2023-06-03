@@ -21,22 +21,24 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/images', function () {
-    return Inertia::render('Images');
-})->middleware(['auth', 'verified'])->name('images');
-
-Route::get('/image/:url', function () {
-    return Inertia::render('Image');
-})->middleware(['auth', 'verified'])->name('image');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/images', function () {
+    return Inertia::render('Images');
+})->middleware(['auth', 'verified'])->name('images');
+
+Route::get('/image/{url}', function () {
+    return Inertia::render('Image');
+})->middleware(['auth', 'verified'])->name('image');
+
 Route::controller(ImageController::class)->group(function(){
-    Route::post('/upload-image', 'upload')->name('image.store');
+    Route::post('/api/upload', 'upload')->name('image.store');
+    Route::get('/api/images', 'index')->name('image.get');
+    Route::get('/api/image/{url}', 'show')->name('image.show');
 });
 
 require __DIR__.'/auth.php';

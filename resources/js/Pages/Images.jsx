@@ -12,7 +12,7 @@ export default function Images({ auth }) {
         const formData = new FormData();
         formData.append('image', image);
 
-        axios.post('/upload-image', formData, {
+        axios.post('/api/upload', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

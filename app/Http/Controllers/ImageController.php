@@ -7,10 +7,20 @@ use App\Models\Images;
 
 class ImageController extends Controller
 {
-    // Show Image
+    // Send all images
+    public function index()
+    {
+        $images = Images::all();
+
+        return $images;
+    }
+
+    // Send single image
     public function show($url)
     {
-        return view('image', compact('url'));
+        $url = '/image/' . $url;
+        $image = Images::where('url', $url)->first();
+        return $image;
     }
 
     // Store Image
@@ -30,14 +40,15 @@ class ImageController extends Controller
             $ImageName = $name . time() . '.' . $extension;
         }
 
-        $path = $request->image->move(public_path('photos'), $ImageName);
+        $request->image->move(public_path('photos'), $ImageName);
 
+        $path = 'photos/' . $ImageName;
         $randomSuffix = substr(md5(rand()), 0, 7); 
         $url = '/image/' . $randomSuffix;
 
         $image = Images::create([
             'name' => $ImageName,
-            'path' => $path,
+            'path' => url($path),
             'url' => $url,
             'user_id' => auth()->user()->id,
         ]);
