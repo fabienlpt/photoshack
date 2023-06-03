@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Images;
 
 class ImageController extends Controller
 {
@@ -30,6 +31,16 @@ class ImageController extends Controller
         }
 
         $path = $request->image->move(public_path('photos'), $ImageName);
+
+        $randomSuffix = substr(md5(rand()), 0, 7); 
+        $url = '/image/' . $randomSuffix;
+
+        $image = Images::create([
+            'name' => $ImageName,
+            'path' => $path,
+            'url' => $url,
+            'user_id' => auth()->user()->id,
+        ]);
 
         return back()->with('success', 'Image uploaded Successfully!');
     }
