@@ -11,7 +11,7 @@ class ImageController extends Controller
     {
         return view('image', compact('url'));
     }
-    
+
     // Store Image
     public function upload(Request $request)
     {
@@ -25,11 +25,11 @@ class ImageController extends Controller
         $extension = explode('.', $ImageName)[1];
 
         // check if file exists in folder
-        if (file_exists(public_path('images/' . $ImageName))) {
+        if (file_exists(public_path('photos/' . $ImageName))) {
             $ImageName = $name . time() . '.' . $extension;
         }
 
-        $path = $request->image->move(public_path('images'), $ImageName);
+        $path = $request->image->move(public_path('photos'), $ImageName);
 
         return back()->with('success', 'Image uploaded Successfully!');
     }
