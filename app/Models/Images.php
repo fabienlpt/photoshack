@@ -13,6 +13,7 @@ class Images extends Model
         'name',
         'path',
         'url',
+        'is_public',
         'user_id',
     ];
 }

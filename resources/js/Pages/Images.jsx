@@ -50,13 +50,23 @@ export default function Images({ auth }) {
                         <div className='flex flex-wrap w-full justify-around'>
                             {
                                 images.map((image) => (
-                                    <div className="bg-white p-auto">
+                                    <div className="bg-white p-auto relative">
                                         <img 
                                             className='max-h-[15rem]'
                                             src={image.path}
                                             alt={image.name}
                                             onClick={() => window.open(image.url, '_blank')}
                                         />
+                                        {/* add icon open_cadena.svg from public folder */}
+                                        <div className="absolute bottom-0 right-0 m-1">
+                                            <img 
+                                                className='h-6 bg-[rgba(255,255,255,0.5)] rounded p-1'
+                                                src={image.is_public ? "/open_cadena.svg" : "/close_cadena.svg"}
+                                                alt="open"
+                                                onClick={() => window.open(image.url, '_blank')}
+                                            />
+                                        </div>
+
                                     </div>
                                 ))
                             }
