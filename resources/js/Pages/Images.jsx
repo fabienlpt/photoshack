@@ -51,7 +51,12 @@ export default function Images({ auth }) {
                             {
                                 images.map((image) => (
                                     <div className="bg-white p-auto">
-                                        <img src={image.path} alt={image.name} width={400} onClick={() => window.open(image.url, '_blank')} />
+                                        <img 
+                                            className='max-h-[15rem]'
+                                            src={image.path}
+                                            alt={image.name}
+                                            onClick={() => window.open(image.url, '_blank')}
+                                        />
                                     </div>
                                 ))
                             }
