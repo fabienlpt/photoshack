@@ -23,6 +23,13 @@ class ImageController extends Controller
         return $image;
     }
 
+    // show image from user
+    public function showUserImage($id)
+    {
+        $images = Images::where('user_id', $id)->get();
+        return $images;
+    }
+
     // Store Image
     public function upload(Request $request)
     {

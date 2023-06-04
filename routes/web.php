@@ -18,7 +18,7 @@ use App\Http\Controllers\ImageController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Accueil');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -39,6 +39,7 @@ Route::controller(ImageController::class)->group(function(){
     Route::post('/api/upload', 'upload')->name('image.store');
     Route::get('/api/images', 'index')->name('image.get');
     Route::get('/api/image/{url}', 'show')->name('image.show');
+    Route::get('/api/user/images/{id}', 'showUserImage')->name('image.showUserImage');
 });
 
 require __DIR__.'/auth.php';
