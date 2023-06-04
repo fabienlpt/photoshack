@@ -50,6 +50,16 @@ export default function Images({ auth }) {
     };
 
     const deleteImage = (id) => {
+        axios.delete('/api/images/delete/', {
+            data: {
+                id: id
+            }
+        }).then(() => {
+            UpdateImages();
+            console.log('success');
+        }).catch((err) => {
+            console.log(err);
+        });
     };
         
     return (
@@ -73,11 +83,20 @@ export default function Images({ auth }) {
                                             onClick={() => window.open(image.url, '_blank')}
                                         />
                                         {/* add icon open_cadena.svg from public folder */}
-                                        <button className="absolute bottom-0 right-0 m-1" onClick={() => updateAccess(image.id, !image.is_public)}>
+                                        <button className="absolute top-0 right-0 m-1" onClick={() => updateAccess(image.id, !image.is_public)}>
                                             <img 
                                                 className='h-6 bg-[rgba(255,255,255,0.5)] rounded p-1'
                                                 src={image.is_public ? "/open_cadena.svg" : "/close_cadena.svg"}
                                                 alt="open"
+                                            />
+                                        </button>
+
+                                        {/* add icon trash.svg from public folder */}
+                                        <button className="absolute bottom-0 right-0 m-1" onClick={() => deleteImage(image.id)}>
+                                            <img
+                                                className='h-6 bg-[rgba(255,255,255,0.5)] rounded p-1'
+                                                src="/trash.svg"
+                                                alt="trash"
                                             />
                                         </button>
 

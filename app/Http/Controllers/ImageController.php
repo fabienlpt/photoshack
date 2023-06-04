@@ -77,4 +77,23 @@ class ImageController extends Controller
 
         return $image;
     }
+
+    // Delete Image
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $image = Images::find($request->id);
+
+        // delete image from folder with the path
+        $path = explode('/', $image->path)[3] . '/' . explode('/', $image->path)[4];
+        unlink(public_path($path));
+
+        // delete image from database
+        $image->delete();
+
+        return $image;
+    }
 }

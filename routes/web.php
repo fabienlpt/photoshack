@@ -41,6 +41,7 @@ Route::controller(ImageController::class)->group(function(){
     Route::get('/api/image/{url}', 'show')->name('image.show');
     Route::get('/api/user/images/{id}', 'showUserImage')->name('image.showUserImage');
     Route::put('/api/images/update', 'update')->name('image.update');
+    Route::delete('/api/images/delete', 'destroy')->name('image.destroy');
 });
 
 require __DIR__.'/auth.php';
