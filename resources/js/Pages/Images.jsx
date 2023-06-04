@@ -35,8 +35,23 @@ export default function Images({ auth }) {
             console.log(err);
         }
         );
-        
     };
+
+    const updateAccess = (id, is_public) => {
+        axios.put('/api/images/update', {
+            id: id,
+            is_public: is_public
+        }).then(() => {
+            UpdateImages();
+            console.log('success');
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+    const deleteImage = (id) => {
+    };
+        
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -58,14 +73,13 @@ export default function Images({ auth }) {
                                             onClick={() => window.open(image.url, '_blank')}
                                         />
                                         {/* add icon open_cadena.svg from public folder */}
-                                        <div className="absolute bottom-0 right-0 m-1">
+                                        <button className="absolute bottom-0 right-0 m-1" onClick={() => updateAccess(image.id, !image.is_public)}>
                                             <img 
                                                 className='h-6 bg-[rgba(255,255,255,0.5)] rounded p-1'
                                                 src={image.is_public ? "/open_cadena.svg" : "/close_cadena.svg"}
                                                 alt="open"
-                                                onClick={() => window.open(image.url, '_blank')}
                                             />
-                                        </div>
+                                        </button>
 
                                     </div>
                                 ))

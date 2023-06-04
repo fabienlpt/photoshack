@@ -62,4 +62,19 @@ class ImageController extends Controller
 
         return back()->with('success', 'Image uploaded Successfully!');
     }
+
+    // Update Image
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'is_public' => 'required',
+        ]);
+
+        $image = Images::find($request->id);
+        $image->is_public = $request->is_public;
+        $image->save();
+
+        return $image;
+    }
 }
