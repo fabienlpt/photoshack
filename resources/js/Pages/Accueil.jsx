@@ -26,12 +26,22 @@ export default function Dashboard({ auth }) {
                             {
                                 images.map((image) => (
                                     <div className="bg-white p-auto">
-                                        <img 
-                                            className='max-h-[15rem]'
-                                            src={image.path}
-                                            alt={image.name}
-                                            onClick={() => window.open(image.url, '_blank')}
-                                        />
+                                        {
+                                            image.is_public ? (
+                                                <img 
+                                                    className='max-h-[15rem]'
+                                                    src={image.path}
+                                                    alt={image.name}
+                                                    onClick={() => window.open(image.url, '_blank')}
+                                                />
+                                            ) : (
+                                                <img
+                                                    className='max-h-[15rem] opacity-30 rounded p-1'
+                                                    src="/close_cadena.svg"
+                                                    alt="close"
+                                                />
+                                            )
+                                        }
                                     </div>
                                 ))
                             }
