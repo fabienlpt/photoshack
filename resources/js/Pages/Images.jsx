@@ -1,11 +1,17 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Head } from '@inertiajs/react';
 import axios from 'axios';
+import {useDropzone} from 'react-dropzone'
+
 
 export default function Images({ auth }) {
-    const [image, setImage] = useState([]);
     const [images, setImages] = useState([]);
+    const onDrop = useCallback(acceptedFiles => {
+        onSubmit(acceptedFiles[0]);
+        console.log(acceptedFiles[0]);
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     React.useEffect(() => {
         UpdateImages();
@@ -17,9 +23,7 @@ export default function Images({ auth }) {
         });
     };
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-
+    const onSubmit = (image) => {
         const formData = new FormData();
         formData.append('image', image);
 
@@ -114,8 +118,23 @@ export default function Images({ auth }) {
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">Ajouter une image :</div>
 
-                            <div className="p-6 bg-white border-b border-gray-200">
-                                <form onSubmit={onSubmit}>
+                            <div className="p-6 bg-white border-b border-gray-200" 
+                                {...getRootProps()}>
+                                <input {...getInputProps()} />
+                                {
+                                    isDragActive ?
+                                    <p>Drop the files here ...</p> :
+                                    <div className='flex flex-row w-full mb-4'>
+                                        <label className="text-xl text-gray-600">Image :<span className="text-red-500">*</span></label>
+                                        <input type="file" className="pl-4" name="image" id="image" placeholder="Image" onChange={(e) => onSubmit(e.target.files[0])} required/>
+                                    </div>
+                                }
+                                <button type="submit"
+                                    className="p-2 bg-blue-500 rounded-xl text-white hover:bg-blue-400">
+                                    Ajouter
+                                </button>
+
+                                {/* <form onSubmit={onSubmit}>
                                     <div className="mb-4">
                                         <div className='flex flex-row w-full mb-4'>
                                             <label className="text-xl text-gray-600">Image :<span className="text-red-500">*</span></label>
@@ -126,7 +145,7 @@ export default function Images({ auth }) {
                                             Ajouter
                                         </button>
                                     </div>
-                                </form>
+                                </form> */}
                             </div>
                         </div>
                     </div>
